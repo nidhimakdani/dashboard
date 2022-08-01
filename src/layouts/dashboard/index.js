@@ -18,7 +18,7 @@ import Grid from "@mui/material/Grid";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
-
+import { useEffect, React, useState } from "react";
 // Material Dashboard 2 React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
@@ -26,7 +26,10 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 // import ReportsBarChart from "examples/Charts/BarCharts/ReportsBarChart";
 // import ReportsLineChart from "examples/Charts/LineCharts/ReportsLineChart";
 import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatisticsCard";
+import axios from "axios"
 
+
+const token = localStorage.getItem('Token')
 // Data
 // import reportsBarChartData from "layouts/dashboard/data/reportsBarChartData";
 // import reportsLineChartData from "layouts/dashboard/data/reportsLineChartData";
@@ -38,6 +41,35 @@ import ComplexStatisticsCard from "examples/Cards/StatisticsCards/ComplexStatist
 function Dashboard() {
   // const { sales, tasks } = reportsLineChartData;
   // NidhiDashboard
+
+
+  
+
+  const [fetcheddata, setFetcheddata] = useState([]);
+  const getData = async () => {
+
+  // const tokenStr = localStorage.getItem('Token')
+
+
+    try {
+      const response = await  axios.get(`https://0170-49-36-87-221.in.ngrok.io/v1/admin/expense/totalexpense?token=${token}`);
+      // console.log(response.data);
+      // const finalArray = response.data;
+      // finalArray.map((item => ( console.log(item.amount))))
+      setFetcheddata(response.data)
+      // console.log(finalArray)
+      // setData(response.cartdata);
+      // setFetcheddata(response.fetcheddata);
+      // console.log(fetcheddata)
+      console.log(response.data)
+    } catch (error) {
+      console.log("dd");
+    }
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);  
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -74,17 +106,21 @@ function Dashboard() {
           </Grid>
           <Grid item xs={12} md={6} lg={3}>
             <MDBox mb={1.5}>
+              <div>
+              {fetcheddata.map((item)=>(
               <ComplexStatisticsCard
                 color="success"
                 icon="store"
-                title="Total Expense"
-                count="34k"
+                title="Total Expense ₹"
+                
+                count={item.amount}
                 // percentage={{
                 //   color: "success",
                 //   amount: "+1%",
                 //   label: "than yesterday",
                 // }}
-              />
+                
+              />))}</div>
             </MDBox>
           </Grid>
           <Grid item xs={12} md={6} lg={3}>

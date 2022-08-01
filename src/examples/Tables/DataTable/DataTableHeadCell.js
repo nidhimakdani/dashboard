@@ -21,6 +21,7 @@ import Icon from "@mui/material/Icon";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
+import { React } from "react";
 
 // Material Dashboard 2 React contexts
 import { useMaterialUIController } from "context";

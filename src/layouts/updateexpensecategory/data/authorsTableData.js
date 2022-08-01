@@ -17,8 +17,6 @@ Coded by www.creative-tim.com
 
 // Material Dashboard 2 React components
 // import MDBox from "components/MDBox";
-import { React } from "react";
-
 import MDTypography from "components/MDTypography";
 // import MDAvatar from "components/MDAvatar";
 // import MDBadge from "components/MDBadge";
@@ -53,20 +51,20 @@ export default function data() {
 
   return {
     columns: [
-      { Header: "expense", accessor: "expense", align: "left" },
-      // { Header: "amount", accessor: "amount", align: "center" },
-      // { Header: "expense", accessor: "expense", align: "center" },
+      { Header: "category", accessor: "category", align: "left" },
+      { Header: "amount", accessor: "amount", align: "center" },
+      { Header: "expense", accessor: "expense", align: "center" },
       { Header: "update", accessor: "update", align: "center" },
-      // { Header: "delete", accessor: "delete", align: "delete" },
+      { Header: "delete", accessor: "delete", align: "delete" },
     ],
 
     rows: [
       {
-        // delete: <MDButton>Delete</MDButton>,
+        delete: <MDButton>Delete</MDButton>,
         update: <MDButton>Update</MDButton>,
-        expense: <MDTypography>565622</MDTypography>,
-        // amount: <MDTypography>1250</MDTypography>,
-        // expense: <MDTypography>59744512</MDTypography>,
+        category: <MDTypography>sales</MDTypography>,
+        amount: <MDTypography>1250</MDTypography>,
+        expense: <MDTypography>59744512</MDTypography>,
       },
     ],
   };

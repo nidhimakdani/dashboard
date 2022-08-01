@@ -21,6 +21,7 @@ import MDTypography from "components/MDTypography";
 // import MDButton from "components/MDButton";
 // import MDAvatar from "components/MDAvatar";
 // import MDBadge from "components/MDBadge";
+import { React } from "react";
 
 // // Images
 // import team2 from "assets/images/team-2.jpg";

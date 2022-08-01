@@ -15,7 +15,7 @@ Coded by www.creative-tim.com
 
 // react-router-dom components
 import { Link } from "react-router-dom";
-
+// import axious from "axios"
 // @mui material components
 import Card from "@mui/material/Card";
 import Checkbox from "@mui/material/Checkbox";
@@ -28,11 +28,64 @@ import MDButton from "components/MDButton";
 
 // Authentication layout components
 import CoverLayout from "layouts/authentication/components/CoverLayout";
+import { React, useState } from "react";
+import axios from "axios";
 
 // Images
 import bgImage from "assets/images/bg-sign-up-cover.jpeg";
 
+const tokenStr = localStorage.getItem('Token')
 function Cover() {
+
+  // const [rememberMe, setRememberMe] = useState(false);
+
+  // const handleSe tRememberMe = () => setRememberMe(!rememberMe);
+
+  const [accname, setAccname] = useState("");
+  const [email, setEmail] = useState("");
+  async function SignupData(e) {
+    e.preventDefault();
+    try {
+      const logindata = {
+        accname,
+        email,
+      };
+
+      console.log("dataaaa", logindata);
+      await axios
+        .post(
+          "https://0170-49-36-87-221.in.ngrok.io/v1/admin/newEcommAcc",
+          JSON.stringify(logindata),
+
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "https://0170-49-36-87-221.in.ngrok.io/v1/admin/newEcommAcc",
+              "Access-Control-Allow-Methods": "GET,POST,PUT",
+              "Access-Control-Allow-Headers": " Content - Type",
+              "Access-Control-Allow-Credentials": true,
+              "Authorization" : `Bearer ${tokenStr}`
+
+            },
+          }
+        )
+        .then(() => {
+          
+          console.log("new");
+          // const mainToken = res.data.token;
+          // const useremail = res.data.token;
+          // localStorage.setItem("Token", mainToken);
+          // console.log(useremail)
+          // localStorage.setItem("email", useremail);
+          //   console.log(useremail);
+        })
+        .catch(() => window.alert("Invalid"));
+    } catch (error) {
+      console.error("cach", error);
+    }
+  };
+
   return (
     <CoverLayout image={bgImage}>
       <Card>
@@ -61,6 +114,8 @@ function Cover() {
                 type="text"
                 label="Account Name"
                 variant="standard"
+                onChange={(e) => setAccname(e.target.value)}
+                value={accname}
                 fullWidth
               />
             </MDBox>
@@ -69,11 +124,13 @@ function Cover() {
                 type="email"
                 label="Email"
                 variant="standard"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
                 fullWidth
               />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="date" variant="standard" fullWidth />
+              <MDInput type="date" variant="standard"  fullWidth />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Checkbox />
@@ -97,8 +154,8 @@ function Cover() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
-                sign in
+              <MDButton onClick={(e) => SignupData(e)} variant="gradient" color="info" fullWidth>
+                sign up
               </MDButton>
             </MDBox>
             <MDBox mt={3} mb={1} textAlign="center">
@@ -111,6 +168,7 @@ function Cover() {
                   color="info"
                   fontWeight="medium"
                   textGradient
+                 
                 >
                   Sign In
                 </MDTypography>

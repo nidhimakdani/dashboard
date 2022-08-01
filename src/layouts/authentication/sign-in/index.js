@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState } from "react";
+import { React,useState } from "react";
 
 // react-router-dom components
 import { Link } from "react-router-dom";
@@ -23,7 +23,7 @@ import Card from "@mui/material/Card";
 import Switch from "@mui/material/Switch";
 // import Grid from "@mui/material/Grid";
 // import MuiLink from "@mui/material/Link";
-
+import axios from "axios";
 // // @mui icons
 // import FacebookIcon from "@mui/icons-material/Facebook";
 // import GitHubIcon from "@mui/icons-material/GitHub";
@@ -45,7 +45,51 @@ function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  async function LoginData(e) {
+    e.preventDefault();
+    try {
+      const logindata = {
+        email,
+        password,
+      };
 
+      console.log("dataaaa", logindata);
+      await axios
+        .post(
+          "https://0170-49-36-87-221.in.ngrok.io/v1/admin/login",
+          JSON.stringify(logindata),
+
+          {
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+              "Access-Control-Allow-Origin": "https://0170-49-36-87-221.in.ngrok.io/v1/admin/login",
+              "Access-Control-Allow-Methods": "GET,POST,PUT",
+              "Access-Control-Allow-Headers": " Content - Type",
+              "Access-Control-Allow-Credentials": true,
+            },
+          }
+        )
+        .then((res) => {
+          
+          console.log("new");
+          // const mainToken = res.data.token;
+          const useremail = res.data.token;
+          // localStorage.setItem("Token", mainToken);
+          console.log(useremail)
+          localStorage.setItem("Token", useremail);
+          const ngrok = 'https://07ae-2405-201-2029-a841-8851-104e-a9e8-3215.ngrok.io/'
+          localStorage.setItem('ngrok',ngrok)
+          //   console.log(useremail);
+        })
+        .catch(() => window.alert("Invalid"));
+    } catch (error) {
+      console.error("cach", error);
+    }
+  }
   return (
     <BasicLayout image={bgImage}>
       <Card>
@@ -84,10 +128,12 @@ function Basic() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput type="email" onChange={(e) => setEmail(e.target.value)}
+                value={email} label="Email" fullWidth />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput type="password" onChange={(e) => setPassword(e.target.value)}
+                value={password} label="Password" fullWidth />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
@@ -102,7 +148,7 @@ function Basic() {
               </MDTypography>
             </MDBox>
             <MDBox mt={4} mb={1}>
-              <MDButton variant="gradient" color="info" fullWidth>
+              <MDButton onClick={(e) => LoginData(e)} variant="gradient" color="info" fullWidth>
                 sign in
               </MDButton>
             </MDBox>

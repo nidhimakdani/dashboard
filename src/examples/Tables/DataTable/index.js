@@ -19,7 +19,7 @@ import { useMemo, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 
 // react-table components
-import { useTable, usePagination, useGlobalFilter, useAsyncDebounce, useSortBy } from "react-table";
+import { React, useTable, usePagination, useGlobalFilter, useAsyncDebounce, useSortBy } from "react-table";
 
 // @mui material components
 import Table from "@mui/material/Table";

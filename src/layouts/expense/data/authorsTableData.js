@@ -26,8 +26,35 @@ import MDTypography from "components/MDTypography";
 // import team3 from "assets/images/team-3.jpg";
 // import team4 from "assets/images/team-4.jpg";
 import MDButton from "components/MDButton";
+import { useEffect, React, useState } from "react";
+import axios from "axios"
 
-export default function data() {
+export default function data () {
+  const [fetcheddata, setFetcheddata] = useState([]);
+  const getData = async () => {
+
+  // const tokenStr = localStorage.getItem('Token')
+
+
+    try {
+      const response = await  axios.get(`https://0170-49-36-87-221.in.ngrok.io/v1/admin/expense/viewExpense?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhZG1pbklkIjoiNjJkZTJkMDdjMjcyZWNkNTU3MmQ2YTYzIiwicGFzc3dvcmQiOiJhZG1pbiIsImxvZ0lkIjoiNjJlMjQ1M2NiZWVjNGNlYWYzYzk1NjYyIiwiaWF0IjoxNjU4OTk2MDI4LCJleHAiOjE2NTg5OTk2Mjh9.Lu-GCHRYpRAJwypUwASSqoptF0mQ-5ayFaqbin7Q9ww`);
+      // console.log(response.data);
+      // const finalArray = response.data;
+      // finalArray.map((item => ( console.log(item.amount))))
+      setFetcheddata(response.data)
+      // console.log(finalArray)
+      // setData(response.cartdata);
+      // setFetcheddata(response.fetcheddata);
+      // console.log(fetcheddata)
+      console.log(response.data)
+    } catch (error) {
+      console.log("dd");
+    }
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);  
   // const Author = ({ image, name, email }) => (
   //   <MDBox display="flex" alignItems="center" lineHeight={1}>
   //     <MDAvatar src={image} name={name} size="sm" />
@@ -50,6 +77,7 @@ export default function data() {
   // );
 
   return {
+
     columns: [
       { Header: "category", accessor: "category", align: "left" },
       { Header: "amount", accessor: "amount", align: "center" },
@@ -59,13 +87,16 @@ export default function data() {
     ],
 
     rows: [
+      fetcheddata.map((item)=>(item.amount)),
+      
       {
         delete: <MDButton>Delete</MDButton>,
         update: <MDButton>Update</MDButton>,
-        category: <MDTypography>sales</MDTypography>,
-        amount: <MDTypography>1250</MDTypography>,
-        expense: <MDTypography>59744512</MDTypography>,
-      },
+        category: <MDTypography>item.descriptio</MDTypography>,
+        amount: <MDTypography>item.amount</MDTypography>,
+        expense: <MDTypography>item.createdAt</MDTypography>,
+      }
+    
     ],
   };
 }

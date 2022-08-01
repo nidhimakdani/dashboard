@@ -13,7 +13,7 @@ Coded by www.creative-tim.com
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
 
-import { useState, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 
 // react-router components
 import { useLocation, Link } from "react-router-dom";
@@ -149,9 +149,9 @@ function DashboardNavbar({ absolute, light, isMini }) {
                 sx={navbarMobileMenu}
                 onClick={handleMiniSidenav}
               >
-                {/* <Icon sx={iconsStyle} fontSize="medium">
+                <Icon sx={iconsStyle} fontSize="medium">
                   {miniSidenav ? "menu_open" : "menu"}
-                </Icon> */}
+                </Icon>
               </IconButton>
               <IconButton
                 size="small"

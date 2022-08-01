@@ -18,6 +18,7 @@ import PropTypes from "prop-types";
 
 // @mui material components
 import Grid from "@mui/material/Grid";
+import { React } from "react";
 
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";

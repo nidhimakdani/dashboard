@@ -24,6 +24,7 @@ import Icon from "@mui/material/Icon";
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
+import { React } from "react";
 
 function ComplexStatisticsCard({ color, title, count, percentage, icon }) {
   return (

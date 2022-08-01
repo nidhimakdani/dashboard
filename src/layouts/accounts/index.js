@@ -16,7 +16,8 @@ Coded by www.creative-tim.com
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
-
+import { useState, React, useEffect } from "react";
+import axios from "axios"
 // Material Dashboard 2 React components
 import MDBox from "components/MDBox";
 import MDTypography from "components/MDTypography";
@@ -28,20 +29,51 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import DataTable from "examples/ExpenseList/DataTable";
 
 // Data
-import authorsTableData from "layouts/accounts/data/authorsTableData";
+// import authorsTableData from "layouts/accounts/data/authorsTableData";
 // import projectsTableData from "layouts/tables/data/projectsTableData";
 import MDButton from "components/MDButton";
 // import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+const token = localStorage.getItem('Token')
+
 // const navigate = useNavigate();
 function Accounts() {
-  const { columns, rows } = authorsTableData();
+  // const { columns, rows } = authorsTableData();
   // const { columns: pColumns, rows: pRows } = projectsTableData();
   // const click = () => {
   //   alert("gradient");
   //   navigate("www.google.com");
   // };
+  const [fetcheddata, setFetcheddata] = useState([]);
+  const getData = async () => {
+
+  // const tokenStr = localStorage.getItem('Token')
+
+
+    try {
+      const response = await  axios.get(`https://0170-49-36-87-221.in.ngrok.io/v1/admin/viewAccount?token=${token}
+      `);
+      // console.log(response.data);
+      // const finalArray = response.data;
+      // finalArray.map((item => ( console.log(item.amount))))
+      setFetcheddata(response.data)
+      // console.log(finalArray)
+      // setData(response.cartdata);
+      // setFetcheddata(response.fetcheddata);
+      // console.log(fetcheddata)
+      console.log(response.data)
+    } catch (error) {
+      console.log("dd");
+    }
+  }
+
+  useEffect(() => {
+    getData();
+  }, []);  
+  // const { columns, rows } = authorsTableData();
+  // const { columns: pColumns, rows: pRows } = projectsTableData();
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -71,16 +103,62 @@ function Accounts() {
                 </Link>
               </MDBox>
               {/* <button onClick={() => navigate("h6")}>Add</button> */}
-              <MDBox pt={3}>
-                <DataTable
-                  table={{ columns, rows }}
-                  isSorted={false}
-                  entriesPerPage={false}
-                  showTotalEntries={false}
-                  noEndBorder
-                />
-              </MDBox>
-            </Card>
+              <MDBox pt={1}>
+                  <DataTable table={{columns: [
+      {  accessor: "accountname", align: "left" },
+      { accessor: "profit", align: "left" },
+      { accessor: "email", align: "left" },
+      {  accessor: "date", align: "center" },
+    ], rows: [
+                       
+                        
+                        {
+                          
+                          accountname: 'accountname',
+                          profit: 'profit',
+                          email: 'email',
+                          date: 'date',
+                        }
+                      
+                      ],}}  isSorted={false}
+                      entriesPerPage={false}
+                      showTotalEntries={false}
+                      noEndBorder/>
+                  <div> {fetcheddata.map((item)=>(
+                          
+                          
+                  <DataTable
+                    table={{  
+                      
+                      columns: [
+                        { accessor: "accountname", align: "left" },
+                        {accessor: "profit", align: "left" },
+                        {  accessor: "email", align: "left" },
+                        {  accessor: "date", align: "center" },
+                      ],
+                      
+                      rows: [
+                       
+                        
+                        {
+                          /* eslint no-underscore-dangle: 0 */
+
+                          accountname: <MDTypography >{item.accname}</MDTypography>,
+                          profit: <MDTypography>2424</MDTypography>,
+                          email: <MDTypography>{item.email}</MDTypography>,
+                          date: <MDTypography>{item.createDate.slice(0, 10)}</MDTypography>,
+                        }
+                      
+                      ],
+                    
+                    }}
+                    isSorted={false}
+                    entriesPerPage={false}
+                    showTotalEntries={false}
+                    noEndBorder
+                  /> ))}</div>
+                </MDBox>
+              </Card>
           </Grid>
           <Grid item xs={12}>
             <Card>
